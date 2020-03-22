@@ -19,11 +19,6 @@ git clone https://github.com/bachirelkhadir/covid-19.git
 Move inside the folder and run julia using the following commands.
 ```
 cd covid-19/
-julia --project
-```
-
-Finally, run the code.
-```
-include("covid_19.jl")
+julia covid_19.jl
 ```
 
