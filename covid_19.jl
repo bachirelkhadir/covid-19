@@ -15,7 +15,7 @@ using Plots
 using JuMP
 using MathOptInterface
 using CSDP
-# using MosekTools
+using MosekTools
 
 
 ##############################################
@@ -31,8 +31,9 @@ r₀=1.
 r=.1
 ϵ = .1
 tol = 1e-3
-solver = optimizer_with_attributes(CSDP.Optimizer, "printlevel" => 0)
-
+#solver = optimizer_with_attributes(CSDP.Optimizer, "printlevel" => 0)
+solver = optimizer_with_attributes(Mosek.Optimizer, "QUIET" => true)
+@show solver
 
 ##############################################
 # Vector Field
@@ -115,7 +116,7 @@ function is_valid_upper_bound(;δ, r, r₀,
     # Returns true if the model is successfully solved
     st = termination_status(model)   
     (st == MathOptInterface.ALMOST_OPTIMAL) | 
-    (st == MathOptInterface.OPTIMAL) |
+    (st == MathOptInterface.OPTIMAL) #|
     (st == MathOptInterface.SLOW_PROGRESS) 
 end
 
@@ -156,24 +157,29 @@ end
 # values of deg(B) and deg(putinar).
 ##############################################
 
-# deg(B) and deg putinar to try
-deg_Bs = 2:6
-deg_putinars = 2:2:6
-# 2D array to save the result
-δs = zeros(size(deg_Bs,1), size(deg_putinars,1))
+if ~isinteractive()
+  println("Computing the table of δs...")
 
-for (i, deg_B) in enumerate(deg_Bs)
-    for (j, deg_putinar) in enumerate(deg_putinars)
-      
-        δ = find_δ_by_bisection(0., 1.; deg_B=deg_B,
-                                deg_putinar=deg_putinar, tol=tol,
-                                r₀=r₀, r=r, ϵ=ϵ, solver=solver)
-        
-        δs[i, j] = δ
-        
-        @show deg_B, deg_putinar, δ
+  # deg(B) and deg putinar to try
+  deg_Bs = 2:6
+  deg_putinars = 2:2:6
+  # 2D array to save the result
+  δs = zeros(size(deg_Bs,1), size(deg_putinars,1))
 
-    end
+  for (i, deg_B) in enumerate(deg_Bs)
+      for (j, deg_putinar) in enumerate(deg_putinars)
+
+          δ = find_δ_by_bisection(0., 1.; deg_B=deg_B,
+                                  deg_putinar=deg_putinar, tol=tol,
+                                  r₀=r₀, r=r, ϵ=ϵ, solver=solver)
+
+          δs[i, j] = δ
+
+          @show deg_B, deg_putinar, δ
+
+      end
+  end
+
+  @show round.(δs, digits=3)
+
 end
-
-@show δs
