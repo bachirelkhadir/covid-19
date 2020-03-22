@@ -1,3 +1,13 @@
+# Install required dependies
+using Pkg
+Pkg.activate(".")
+Pkg.instantiate()
+
+
+##############################################
+# Import libraries
+##############################################
+
 using SumOfSquares
 using DynamicPolynomials 
 using DifferentialEquations
