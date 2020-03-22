@@ -16,13 +16,13 @@ Make sure you already have Julia installed on your system. Clone this repo
 git clone https://github.com/bachirelkhadir/covid-19.git
 ```
 
-Move inside the folder, run julia, install the required package:
+Move inside the folder and run julia using the following commands.
 ```
 cd covid-19/
 julia --project
 ```
 
-Finally, run the code
+Finally, run the code.
 ```
 include("covid_19.jl")
 ```
