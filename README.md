@@ -19,6 +19,6 @@ git clone https://github.com/bachirelkhadir/covid-19.git
 Move inside the folder and run julia using the following commands.
 ```
 cd covid-19/
-julia covid_19.jl
+julia barrier_method_to_bound_infection_rate.jl
 ```
 
