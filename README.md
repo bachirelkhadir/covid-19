@@ -20,5 +20,6 @@ Move inside the folder and run julia using the following commands.
 ```
 cd covid-19/
 julia barrier_method_to_bound_infection_rate.jl
+julia lyapunov_method_to_bound_infection_rate.jl
 ```
 
