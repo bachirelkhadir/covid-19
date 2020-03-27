@@ -33,14 +33,13 @@ solver = optimizer_with_attributes(Mosek.Optimizer, "QUIET" => true)
 # Vector Field
 ##############################################
 
-function transmission_vf(S, E, Ir, Iu; 
-    paramters=default_parameters)
-    β, μ, α, D, Z = paramters
+function transmission_vf(S, E, Ir, Iu;
+    parameters=default_parameters)
+    β, μ, α, D, Z = parameters
     [
-        β * S/N * Ir - μ * β * S/N * Iu,
-        β * S/N * Ir + μ * β * S/N * Iu - E/Z,
+        - β * S/N * Ir - μ * β * S/N * Iu,
+          β * S/N * Ir + μ * β * S/N * Iu - E/Z,
         α * E/Z - Ir/D,
         (1-α) * E/Z - Iu/D
     ]
 end
-
